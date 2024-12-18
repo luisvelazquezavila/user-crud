@@ -1,40 +1,12 @@
 import { Button, Label, Modal, TextInput } from "flowbite-react";
-import React, { useState } from "react";
-import { User } from "../types";
+import useUserForm from "../hooks/useUserForm";
+import useUserTable from "../hooks/useUserTable";
 
-interface Props {
-  openModal: boolean,
-  setOpenModal: (openModal: boolean) => void,
-  mode: string,
-  onSubmit: (user: User) => void,
-  selectedUser: User | null
-};
+export default function AddUserForm() {
 
-export default function AddUserForm({ openModal, setOpenModal, onSubmit, mode, selectedUser }: Props) {
+  const { openModal, mode } = useUserTable();
 
-  const [user, setUser] = useState<User>(selectedUser ? selectedUser : {
-    name: "",
-    username: "",
-    id: crypto.randomUUID()
-  });
-
-  console.log(user);
-
-  function onCloseModal() {
-    setOpenModal(false)
-  };
-
-  const handleChange = ((event: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({
-      ...user,
-      [event.target.id]: event.target.value
-    })
-  });
-
-  const handleSubmit = ((event: React.FormEvent) => {
-    event.preventDefault();
-    onSubmit(user);
-  }) 
+  const { user, onCloseModal, handleChange, handleSubmit, error } = useUserForm();
 
   return (
     <>
@@ -67,6 +39,7 @@ export default function AddUserForm({ openModal, setOpenModal, onSubmit, mode, s
                   onChange={handleChange} 
                   required 
                 />
+                {error && <p className="text-red-600">{error}</p>}
               </div>
               <div className="w-full mt-2">
                 <Button type="submit">Save</Button>

@@ -1,75 +1,50 @@
-import { useDispatch, useSelector } from "react-redux";
-import { TheadKeyList, User } from "../types"
-import { RootState } from "../app/store";
-import { addUser, deleteUser, updateUser } from "../features/users/userSlice";
+import { deleteUser } from "../features/users/userSlice";
 import AddUserForm from "./AddUserForm";
-import { useState } from "react";
+import useUserTable from "../hooks/useUserTable";
+import ConfirmedDelete from "./ConfirmedDelete";
+// import { useState } from "react";
 
 export default function UserTable() {
 
-  const [mode, setMode] = useState('create');
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [openModal, setOpenModal] = useState(false);
+  const theadKeys = ["Name", "Username",""];
 
-  const theadKeys: TheadKeyList = [
-    {
-      title: "Name"
-    },
-    {
-      title: "Username"
-    },
-    {
-      title: ""
-    }
-  ];
+  // const [confirmedModal, setComfirmedModal] = useState(false);
 
-  const users = useSelector((state: RootState) => state.users);
-  const dispatch = useDispatch();
-
-  const handleSubmit = (user: User) => {
-    if (mode === 'create') {
-      dispatch(addUser(user));
-    } else {
-      dispatch(updateUser(user));
-    } 
-    setOpenModal(false);
-  };
-
-  const handleCreateUser = () => {
-    setMode("create");
-    setSelectedUser(null);
-    setOpenModal(true);
-  }
-
-  const handleEditUser = (user: User) => () => {
-    setMode("edit");
-    setSelectedUser(user);
-    setOpenModal(true);
-  }
+  const { 
+    openModal, 
+    handleCreateUser, 
+    handleEditUser,
+    users,
+    dispatch  
+  } = useUserTable();
 
   return (
-    <>
-      <h3>Tabla de contenido</h3>
+    <div className="h-screen grid place-content-center gap-y-4 bg-pink-100">
+      <h3 className="text-5xl mb-28">
+        User Table
+      </h3>
+      <ConfirmedDelete />
       <button 
         onClick={handleCreateUser}
+        className="text-white bg-cyan-600 py-2 px-4 rounded-lg w-fit text-xl font-bold"
       >
         Create User
       </button>
-      <table className="table table-striped">
-        <thead>
+      <table className="rounded-lg">
+        <thead className="bg-cyan-600 text-white rounded-lg">
           <tr>
             {theadKeys.map((theadKey) => (
-              <th key={theadKey.title}>{theadKey.title}</th>
+              <th key={theadKey} className="py-2 px-4">{theadKey}</th>
             ))}
           </tr>
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.name}</td>
-              <td>{user.username}</td>
-              <td>
-                <div>
+            <tr key={user.id }>
+              <td className="bord-cyan-600 border-solid border-4 px-4 py-2">{user.name}</td>
+              <td className="bord-cyan-600 border-solid border-4 px-4 py-2">{user.username}</td>
+              <td className="bord-cyan-600 border-solid border-4 px-4 py-2">
+                <div className="flex gap-2">
                   <button 
                     onClick={handleEditUser(user)}
                   >
@@ -108,14 +83,8 @@ export default function UserTable() {
         </tbody>
       </table>
       {openModal && (
-        <AddUserForm 
-          openModal={openModal}
-          setOpenModal={setOpenModal}
-          mode={mode}
-          onSubmit={handleSubmit}
-          selectedUser={selectedUser}
-        />
+        <AddUserForm />
       )}
-    </>
+    </div>
   );
 }
