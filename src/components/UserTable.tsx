@@ -2,28 +2,37 @@ import { deleteUser } from "../features/users/userSlice";
 import AddUserForm from "./AddUserForm";
 import useUserTable from "../hooks/useUserTable";
 import ConfirmedDelete from "./ConfirmedDelete";
-// import { useState } from "react";
+import { useState } from "react";
+import { User } from "../types";
 
 export default function UserTable() {
 
   const theadKeys = ["Name", "Username",""];
 
-  // const [confirmedModal, setComfirmedModal] = useState(false);
+  const [openConfirmedModal, setOpenComfirmedModal] = useState(false);
+  // const [selectedUser, setSelectedUser] = useState<User | undefined>();
+  // console.log(selectedUser);
 
   const { 
     openModal, 
     handleCreateUser, 
     handleEditUser,
     users,
-    dispatch  
+    dispatch,
+    selectedUser,
+    setSelectedUser  
   } = useUserTable();
+
+  const handleDelete = (user: User) => () => {
+    setSelectedUser(user);
+    setOpenComfirmedModal(true);
+  }
 
   return (
     <div className="h-screen grid place-content-center gap-y-4 bg-pink-100">
       <h3 className="text-5xl mb-28">
         User Table
       </h3>
-      <ConfirmedDelete />
       <button 
         onClick={handleCreateUser}
         className="text-white bg-cyan-600 py-2 px-4 rounded-lg w-fit text-xl font-bold"
@@ -61,7 +70,7 @@ export default function UserTable() {
                       <path d="M19 19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .896-2 2v14c0 1.104.897 2 2 2h14a2 2 0 0 0 2-2v-8.668l-2 2V19z" />
                     </svg>
                   </button>
-                  <button onClick={() => dispatch(deleteUser(user.id))}>
+                  <button onClick={handleDelete(user)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -77,14 +86,24 @@ export default function UserTable() {
                     </svg>
                   </button>                 
                 </div>
-              </td>
-            </tr>
+              </td>             
+            </tr>          
+            
           ))}
         </tbody>
       </table>
+      {
+        openConfirmedModal && (
+          <ConfirmedDelete 
+            openConfirmedModal={openConfirmedModal}
+            setOpenConfirmedModal={setOpenComfirmedModal}
+            user={selectedUser}
+          />
+        )
+      }
       {openModal && (
         <AddUserForm />
-      )}
+      )}     
     </div>
   );
 }

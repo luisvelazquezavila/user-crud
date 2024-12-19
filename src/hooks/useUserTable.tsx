@@ -19,7 +19,7 @@ export default function useUserTable() {
     selectedUser, 
     setSelectedUser, 
     openModal, 
-    setOpenModal 
+    setOpenModal, 
   } = context;
 
   const users = useSelector((state: RootState) => state.users);
@@ -29,7 +29,7 @@ export default function useUserTable() {
     if (mode === 'create') {
       dispatch(addUser(user));
     } else {
-      dispatch(updateUser (user));
+      dispatch(updateUser(user));
     } 
     setOpenModal(false);
   };
@@ -52,6 +52,7 @@ export default function useUserTable() {
     mode, 
     onSubmit, 
     selectedUser, 
+    setSelectedUser,
     handleCreateUser, 
     handleEditUser,
     users,
