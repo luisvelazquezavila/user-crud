@@ -1,32 +1,19 @@
-import { deleteUser } from "../features/users/userSlice";
 import AddUserForm from "./AddUserForm";
 import useUserTable from "../hooks/useUserTable";
 import ConfirmedDelete from "./ConfirmedDelete";
-import { useState } from "react";
-import { User } from "../types";
 
 export default function UserTable() {
 
   const theadKeys = ["Name", "Username",""];
-
-  const [openConfirmedModal, setOpenComfirmedModal] = useState(false);
-  // const [selectedUser, setSelectedUser] = useState<User | undefined>();
-  // console.log(selectedUser);
 
   const { 
     openModal, 
     handleCreateUser, 
     handleEditUser,
     users,
-    dispatch,
-    selectedUser,
-    setSelectedUser  
+    openConfirmedModal,
+    handleDelete  
   } = useUserTable();
-
-  const handleDelete = (user: User) => () => {
-    setSelectedUser(user);
-    setOpenComfirmedModal(true);
-  }
 
   return (
     <div className="h-screen grid place-content-center gap-y-4 bg-pink-100">
@@ -35,11 +22,11 @@ export default function UserTable() {
       </h3>
       <button 
         onClick={handleCreateUser}
-        className="text-white bg-cyan-600 py-2 px-4 rounded-lg w-fit text-xl font-bold"
+        className="text-white bg-cyan-600 py-2 px-4 rounded-lg w-fit text-xl font-bold mb-4"
       >
         Create User
       </button>
-      <table className="rounded-lg">
+      <table className="rounded-lg shadow-[7px_7px_15px_rgba(0,0,0,.5)]">
         <thead className="bg-cyan-600 text-white rounded-lg">
           <tr>
             {theadKeys.map((theadKey) => (
@@ -53,9 +40,10 @@ export default function UserTable() {
               <td className="bord-cyan-600 border-solid border-4 px-4 py-2">{user.name}</td>
               <td className="bord-cyan-600 border-solid border-4 px-4 py-2">{user.username}</td>
               <td className="bord-cyan-600 border-solid border-4 px-4 py-2">
-                <div className="flex gap-2">
+                <div className="flex gap-4">
                   <button 
                     onClick={handleEditUser(user)}
+                    title="Edit user"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +58,10 @@ export default function UserTable() {
                       <path d="M19 19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .896-2 2v14c0 1.104.897 2 2 2h14a2 2 0 0 0 2-2v-8.668l-2 2V19z" />
                     </svg>
                   </button>
-                  <button onClick={handleDelete(user)}>
+                  <button 
+                    onClick={handleDelete(user)}
+                      title="Delete user"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -92,15 +83,9 @@ export default function UserTable() {
           ))}
         </tbody>
       </table>
-      {
-        openConfirmedModal && (
-          <ConfirmedDelete 
-            openConfirmedModal={openConfirmedModal}
-            setOpenConfirmedModal={setOpenComfirmedModal}
-            user={selectedUser}
-          />
-        )
-      }
+      {openConfirmedModal && (
+        <ConfirmedDelete />
+      )}
       {openModal && (
         <AddUserForm />
       )}     

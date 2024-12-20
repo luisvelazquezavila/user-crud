@@ -11,6 +11,7 @@ export default function UserTableProvider({ children }: MyProviderProps) {
   const [mode, setMode] = useState('create');
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [openModal, setOpenModal] = useState(false);
+  const [openConfirmedModal, setOpenConfirmedModal] = useState(false);
 
   return (
     <UserTableContext.Provider value={{
@@ -19,7 +20,9 @@ export default function UserTableProvider({ children }: MyProviderProps) {
       selectedUser,
       setSelectedUser,
       openModal,
-      setOpenModal
+      setOpenModal,
+      openConfirmedModal, 
+      setOpenConfirmedModal
     }}>
       { children }
     </UserTableContext.Provider>

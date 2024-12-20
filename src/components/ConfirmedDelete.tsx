@@ -1,20 +1,12 @@
 import { Button, Modal } from "flowbite-react";
-import { useState } from "react";
-import { User } from "../types";
 import { useDispatch } from "react-redux";
 import { deleteUser } from "../features/users/userSlice";
+import useUserTable from "../hooks/useUserTable";
 
-interface Props {
-  openConfirmedModal: boolean,
-  setOpenConfirmedModal: (openConfirmedModal: boolean) => void,
-  user: User | undefined
-}
+export default function ConfirmedDelete() {
 
-export default function ConfirmedDelete({ openConfirmedModal, setOpenConfirmedModal, user }: Props) {
+  const { openConfirmedModal, setOpenConfirmedModal, selectedUser } = useUserTable();
 
-  console.log(user)
-
-  // const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
 
   function onCloseModal() {
@@ -22,7 +14,7 @@ export default function ConfirmedDelete({ openConfirmedModal, setOpenConfirmedMo
   };
 
   const confirmedDeleted = () => {
-    dispatch(deleteUser(user?.id))
+    dispatch(deleteUser(selectedUser?.id))
     onCloseModal();
   }
  
@@ -35,7 +27,7 @@ export default function ConfirmedDelete({ openConfirmedModal, setOpenConfirmedMo
 
           <div className="space-y-6">
             <div>
-              <p className="text-xl">Are you sure you want to eliminate {user?.username}?</p>
+              <p className="text-xl">Are you sure you want to eliminate {selectedUser?.username}?</p>
             </div>
 
             <div className="flex gap-4 justify-end">

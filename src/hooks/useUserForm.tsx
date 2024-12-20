@@ -26,7 +26,7 @@ export default function useUserForm() {
   const handleChange = ((event: React.ChangeEvent<HTMLInputElement>) => {
     setUser({
       ...user,
-      [event.target.id]: event.target.value
+      [event.target.id]: event.target.value.toLowerCase()
     })
   });
 
@@ -40,7 +40,7 @@ export default function useUserForm() {
 
   useEffect(() => { 
     if (selectedUser !== user) {
-      const existingUsername = usernames.some(username => username === user.username && username !== selectedUser?.username);
+      const existingUsername = usernames.some(username => username === user.username.toLowerCase() && username !== selectedUser?.username);
       
       if (existingUsername) {
         setError("Username existente");

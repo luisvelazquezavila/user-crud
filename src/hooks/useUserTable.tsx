@@ -20,6 +20,8 @@ export default function useUserTable() {
     setSelectedUser, 
     openModal, 
     setOpenModal, 
+    openConfirmedModal, 
+    setOpenConfirmedModal
   } = context;
 
   const users = useSelector((state: RootState) => state.users);
@@ -46,6 +48,11 @@ export default function useUserTable() {
     setOpenModal(true);
   }
 
+  const handleDelete = (user: User) => () => {
+    setSelectedUser(user);
+    setOpenConfirmedModal(true);
+  }
+
   return { 
     openModal, 
     setOpenModal, 
@@ -56,6 +63,9 @@ export default function useUserTable() {
     handleCreateUser, 
     handleEditUser,
     users,
-    dispatch  
+    dispatch,
+    openConfirmedModal,
+    setOpenConfirmedModal,
+    handleDelete  
   };
 }

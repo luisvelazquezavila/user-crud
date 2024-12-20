@@ -1,7 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UserList } from "../../types";
 
-const initialState: UserList = [
+const updateLocalStorage = (state: UserList) => {
+  localStorage.setItem('users', JSON.stringify(state));
+}
+
+const storedTask = localStorage.getItem('users');
+
+const initialState: UserList = storedTask
+  ? JSON.parse(storedTask) as UserList
+  : [
   {
     name: "Carlos",
     username: "carlangas",
@@ -38,20 +46,34 @@ const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    deleteUser: (state, actions) => state.filter(item => item.id !== actions.payload), 
+    deleteUser: (state, actions) => {
+      const newState = state.filter(item => item.id !== actions.payload);
+      updateLocalStorage(newState);
+      return(newState);
+    },  
 
-    addUser: (state, actions) => [
+    addUser: (state, actions) => {
+      const newState = [
         ...state,
         actions.payload
-    ],
+      ];
+      updateLocalStorage(newState);
+      return newState
+    } ,
 
-    updateUser: (state, actions) => 
-      state.map(item => {
+    updateUser: (state, actions) => {
+      const newState = state.map(item => {
         if (item.id === actions.payload.id) {
           return  actions.payload
         } 
         return item
-      })
+      });
+
+      updateLocalStorage(newState);
+
+      return newState
+    }
+      
     }
   }
   );
