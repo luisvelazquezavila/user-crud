@@ -43,7 +43,7 @@ export default function useUserForm() {
       const existingUsername = usernames.some(username => username === user.username.toLowerCase() && username !== selectedUser?.username);
       
       if (existingUsername) {
-        setError("Username existente");
+        setError("This username is already in use");
       } else {
         setError(null);
       };
