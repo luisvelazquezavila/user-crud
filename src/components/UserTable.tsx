@@ -41,7 +41,8 @@ export default function UserTable() {
               <td className="bord-cyan-600 border-solid border-4 px-4 py-2">{user.username}</td>
               <td className="bord-cyan-600 border-solid border-4 px-4 py-2">
                 <div className="flex gap-4">
-                  <button 
+                  <button
+                    className="transform hover:scale-150 transition duration-100" 
                     onClick={handleEditUser(user)}
                     title="Edit user"
                   >
@@ -58,9 +59,10 @@ export default function UserTable() {
                       <path d="M19 19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .896-2 2v14c0 1.104.897 2 2 2h14a2 2 0 0 0 2-2v-8.668l-2 2V19z" />
                     </svg>
                   </button>
-                  <button 
+                  <button
+                    className="transform hover:scale-150 transition duration-100" 
                     onClick={handleDelete(user)}
-                      title="Delete user"
+                    title="Delete user"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
