@@ -37,9 +37,9 @@ export default function UserTable() {
         <tbody>
           {users.map((user) => (
             <tr key={user.id }>
-              <td className="bord-cyan-600 border-solid border-4 px-4 py-2">{user.name}</td>
-              <td className="bord-cyan-600 border-solid border-4 px-4 py-2">{user.username}</td>
-              <td className="bord-cyan-600 border-solid border-4 px-4 py-2">
+              <td className="border-cyan-600 border-2 px-4 py-2">{user.name}</td>
+              <td className="border-cyan-600 border-2 px-4 py-2">{user.username}</td>
+              <td className="border-cyan-600 border-2 px-4 py-2">
                 <div className="flex gap-4">
                   <button
                     className="transform hover:scale-150 transition duration-100" 
