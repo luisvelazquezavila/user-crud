@@ -10,7 +10,7 @@ export default function useUserForm() {
 
   const [user, setUser] = useState<User>(selectedUser ? selectedUser : {
     name: "",
-    username: "",
+    username: "".toLowerCase(),
     id: crypto.randomUUID()
   });
 
@@ -26,7 +26,7 @@ export default function useUserForm() {
   const handleChange = ((event: React.ChangeEvent<HTMLInputElement>) => {
     setUser({
       ...user,
-      [event.target.id]: event.target.value.toLowerCase()
+      [event.target.id]: event.target.value
     })
   });
 
