@@ -30,13 +30,12 @@ export default function useUserForm() {
     })
   });
 
-  const handleSubmit = ((event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (!error) {    
       onSubmit(user);
-    }
-    
-  }) 
+    } 
+  };
 
   useEffect(() => { 
     if (selectedUser !== user) {
