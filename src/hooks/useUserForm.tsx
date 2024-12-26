@@ -8,7 +8,7 @@ export default function useUserForm() {
 
   const { setOpenModal, onSubmit, selectedUser } = useUserTable();
 
-  const [user, setUser] = useState<User>(selectedUser ? selectedUser : {
+  const [user, setUser] = useState<User>(selectedUser || {
     name: "",
     username: "".toLowerCase(),
     id: crypto.randomUUID()

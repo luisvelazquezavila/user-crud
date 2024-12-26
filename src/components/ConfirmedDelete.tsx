@@ -20,7 +20,6 @@ export default function ConfirmedDelete() {
  
   return (
     <>
-      {/* <Button onClick={() => setOpenModal(true)}>Open modal</Button> */}
       <Modal show={openConfirmedModal} size="md" dismissible={true} onClose={onCloseModal} popup>
         <Modal.Header />
         <Modal.Body>
