@@ -38,7 +38,7 @@ export default function useUserForm() {
   };
 
   useEffect(() => { 
-    if (selectedUser !== user) {
+    if (selectedUser?.username !== user.username) {
       const existingUsername = usernames.some(username => username === user.username.toLowerCase() && username !== selectedUser?.username);
       
       if (existingUsername) {
