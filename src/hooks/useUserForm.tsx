@@ -50,4 +50,4 @@ export default function useUserForm() {
   }, [usernames, user.username, selectedUser, user]);
 
   return { user, setUser, onCloseModal, handleChange, handleSubmit, error };
-}
+};

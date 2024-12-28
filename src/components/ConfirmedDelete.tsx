@@ -26,7 +26,7 @@ export default function ConfirmedDelete() {
 
           <div className="space-y-6">
             <div>
-              <p className="text-xl">Are you sure you want to eliminate {selectedUser?.username}?</p>
+              <p className="text-xl">Are you sure you want to eliminate <b>{selectedUser?.username}</b>?</p>
             </div>
 
             <div className="flex gap-4 justify-end">
