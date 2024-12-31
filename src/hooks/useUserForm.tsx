@@ -10,7 +10,7 @@ export default function useUserForm() {
 
   const [user, setUser] = useState<User>(selectedUser || {
     name: "",
-    username: "".toLowerCase(),
+    username: "",
     id: crypto.randomUUID()
   });
 
@@ -39,7 +39,11 @@ export default function useUserForm() {
 
   useEffect(() => { 
     if (selectedUser?.username !== user.username) {
-      const existingUsername = usernames.some(username => username === user.username.toLowerCase() && username !== selectedUser?.username);
+      
+      const existingUsername = usernames.some(username => 
+        username.toLowerCase() === user.username.toLowerCase() && 
+        username !== selectedUser?.username
+      );
       
       if (existingUsername) {
         setError("This username is already in use");

@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { UserList } from "../../types";
 
 const updateLocalStorage = (state: UserList) => {
-  localStorage.setItem('users', JSON.stringify(state));
-}
+  localStorage.setItem("users", JSON.stringify(state));
+};
 
 const storedTask = localStorage.getItem('users');
 
